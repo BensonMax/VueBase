@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中动画CCS动画原理</title>
+    <script src='./vue.js'></script>
+    <!-- 用style 控制渐变过程动画 -->
+    <style>
+        @keyframes bonce-in {
+            0% {
+                transform: scale(2);
+            }
+            50% {
+                transform: scale(1.5);
+            }
+            100% {
+                transform: scale(1);
+            }
+
+        }
+        .fade-enter{
+            animation:  bonce-in 1s;
+        }
+        .fade-enter-active{
+            animation:  bonce-in 1s reverse;
+        }
+    </style>
+</head>
+<body>
+    <div id ="vm">
+        <transition name="fade">
+            <div v-if="show">{{msg}}</div>
+        </transition>        
+        <button @click="handleBtnClick">切换</button>
+    </div>
+
+    <script>
+        var vm= new Vue({
+            el: "#vm",
+            data:{
+                msg: 'hello world',
+                show: true
+            },
+            methods:{
+                handleBtnClick: function(){
+                    this.show = !this.show
+                }
+            }
+        })
+    </script>
+</body>
+</html>

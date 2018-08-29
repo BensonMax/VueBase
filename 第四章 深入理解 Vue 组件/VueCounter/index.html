@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VueCount 父子组件间的数据传递</title>
+    <script src='./vue.js'></script>
+</head>
+<body>
+    <div id ="vm">
+        <!-- watch @change -->
+        <counter count="0" @change="handleIncrease"></counter>
+        <counter count="1" @change="handleIncrease"></counter>
+        <div>{{total}}</div>
+    </div>
+    <script>
+        // son
+        // 单向数据流,主流向子，子不能逆流到主
+        var counter = {
+            props: ['count'],
+            data: function(){
+                return{
+                    number: this.count
+                }
+            },
+            template: '<div @click="handleClick">{{number}}</div>',
+            methods:{
+                handleClick: function(){
+                    // step length
+                    this.number ++
+                    // this.number = this.number + 2 ;
+                    // set step 
+                    this.$emit('change',1)
+                }
+            }
+        }
+        // father
+        var vm= new Vue({
+            el: "#vm",
+            components:{
+                counter: counter
+            },
+            data:{
+                total: 1
+            },
+            methods:{
+                handleIncrease: function(step){
+                    this.total += step
+                }
+            }
+        })
+    </script>
+</body>
+</html>

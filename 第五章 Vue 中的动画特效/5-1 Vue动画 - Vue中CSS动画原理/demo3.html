@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中动画封装</title>
+    <script src='./vue.js'></script>
+    <!-- 用style 控制渐变过程动画 -->
+</head>
+<body>
+    <div id ="vm">
+        <fade :show="show">
+            <div>{{msg}}</div>
+        </fade>
+        <fade :show="show">
+            <h1>{{msg}}</h1>
+        </fade>
+        <button @click="handleBtnClick">切换</button>
+    </div>
+
+    <script>
+        Vue.component('fade',{
+            props: ['show'],
+            template:   `<Transition 
+                            @befor-enter="handleBeforeEnter"
+                            @enter ="handleEnter">
+                            <slot v-if="show"></slot>
+                        </Transition>`
+            ,methods:{
+                handleBeforeEnter: function(el){
+                    el.style.color = 'red'
+                },
+                handleEnter: function(el,done){
+                    setTimeout(()=>{
+                        el.style.color = 'green'
+                        done()
+                    }, 1000)
+                }
+            }
+        })
+        var vm= new Vue({
+            el: "#vm",
+            data:{
+                msg: 'hello world',
+                show: true
+            },
+            methods:{
+                handleBtnClick: function(){
+                    this.show = !this.show
+                }
+            }
+        })
+    </script>
+</body>
+</html>

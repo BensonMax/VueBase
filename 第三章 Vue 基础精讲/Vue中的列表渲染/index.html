@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue实例</title>
+    <script src='./vue.js'></script>
+</head>
+<body>
+    <div id ="vm">
+        <div v-for="item of list"
+                  :key="item.id">
+            <div>
+                {{item.text}}
+            </div>
+            <span>
+                {{item.text}}
+            </span>
+        </div>        
+    </div>
+    <script>
+        var vm= new Vue({
+            el: "#vm",
+            data:{
+                list: [{
+                    id: "0101020201",
+                    text: "hello A"},
+                    {
+                    id: "0101020202",
+                    text: "hello B"},
+                    {
+                    id: "0101020203",
+                    text: "hello C"                   
+                }]
+            }
+        })
+    </script>
+</body>
+</html>
